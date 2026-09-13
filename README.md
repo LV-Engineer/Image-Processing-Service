@@ -23,31 +23,24 @@ Users can register, log in, upload images, and apply transformations (resize, cr
 ## Project structure
 
 ```
-api/
-  deps.py            # shared FastAPI dependencies (auth)
-  routes/
-    auth.py           # /auth/signup, /auth/login, /auth/me
-    images.py         # /images CRUD + transform + status routes
-app/
-  main.py             # FastAPI app instance, middleware, router registration
-core/
-  config.py           # Settings (env-driven config)
-  security.py         # password hashing, JWT create/verify
-  storage.py          # S3 upload/download/delete
-  transforms.py        # Pillow-based transform operations
-  cache.py             # Redis-backed transform result cache
-  celery_app.py        # Celery app instance
-  tasks.py              # the async transform task
-  rate_limit.py         # slowapi limiter
-db/
-  base.py             # SQLAlchemy declarative base
-  session.py           # engine, session factory, get_db dependency
-models/               # SQLAlchemy ORM models (User, Image)
-schemas/              # Pydantic request/response schemas
-alembic/              # database migrations
-tests/                # pytest suite (auth, images, transforms)
-docker-compose.yml    # app, worker, db, redis services
-Dockerfile
+.
+├── docker-compose.yml
+├── .github/workflows/    # CI (tests + mypy)
+├── app/main.py           # FastAPI app instance, router registration
+├── api/
+│   ├── deps.py           # auth dependency (get_current_user)
+│   └── routes/           # auth (signup/login/me), images (upload/transform/status/get/list/delete)
+├── core/                 # config (Settings), security (JWT/hashing), storage (S3),
+│                         # transforms (Pillow), cache (Redis), celery app + task, rate limiting
+├── db/                   # SQLAlchemy engine/session, declarative Base
+├── models/               # User, Image
+├── schemas/              # Pydantic request/response schemas
+├── alembic/              # migrations
+├── scripts/
+│   └── init-test-db.sql  # auto-creates the test DB on first Postgres init
+├── tests/                # pytest suite (auth, images, transforms)
+├── Dockerfile
+└── pyproject.toml
 ```
 
 ## Installation
