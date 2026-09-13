@@ -1,0 +1,55 @@
+[project]
+name = "image-processing-service"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "alembic>=1.19.2",
+    "bcrypt>=5.0.0",
+    "boto3>=1.43.91",
+    "celery>=5.6.3",
+    "fastapi>=0.141.1",
+    "mypy>=2.3.1",
+    "pillow>=12.3.0",
+    "psycopg[binary]>=3.3.5",
+    "pydantic[email]>=2.13.5",
+    "pydantic-settings>=2.15.0",
+    "pyjwt>=2.13.0",
+    "python-multipart>=0.0.32",
+    "redis>=8.1.0",
+    "slowapi>=0.1.10",
+    "sqlalchemy>=2.0.52",
+    "uvicorn>=0.52.4",
+]
+
+[dependency-groups]
+dev = [
+    "celery-types>=0.26.0",
+    "httpx>=0.28.1",
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "python-dotenv>=1.2.3",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["boto3.*", "botocore.*"]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+data_file = ".coverage_data/.coverage"
+source = ["api", "core", "db", "models", "schemas", "app"]
+omit = ["*/alembic/*", "*/tests/*"]
+
+[tool.coverage.report]
+show_missing = true
