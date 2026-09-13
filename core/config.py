@@ -12,9 +12,9 @@ class Settings(BaseSettings):
     jwt_algorithm: str
     access_token_expire_minutes: int
 
-    aws_access_key_id: str | None
-    aws_secret_access_key: str | None
-    aws_region: str
+    aws_access_key_id: str | None = None
+    aws_secret_access_key: str | None = None
+    aws_region: str = 'us-east-1'
     aws_s3_bucket: str
 
 settings = Settings()
